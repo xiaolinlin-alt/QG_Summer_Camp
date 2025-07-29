@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To do list</title>
+</head>
+<body>
+    <div class="todo-app">
+        <div class="title">xiaolin的To do app</div>
+
+        <div class="todo-form">
+            <input class="todo-input" type="text" placeholder="Add a todo">
+            <div class="todo-button">add todo</div>  
+        </div>
+
+        <div class="item completed">
+            <input type="checkbox" />
+            <span class="name">吃饭</span>
+            <div class="del">del</div>
+        </div>
+        <div class="item">
+            <input type="checkbox" />
+            <span class="name">吃饭</span>
+            <div class="del">del</div>
+        </div>
+        <div class="item">
+            <input type="checkbox" />
+            <span class="name">吃饭</span>
+            <div class="del">del</div>
+        </div>
+
+    </div>
+    <style>
+        /* 删除按钮样式 */
+        .del {
+            color: rgb(193, 35, 35);
+            cursor: pointer;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        
+        /* 删除按钮 hover 效果 */
+        .del:hover {
+            color: #9e4d48;
+        }
+
+        /* 任务项样式 */
+        .item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-sizing: border-box;
+            width: 90%;
+            height: 36px; /* 缩小高度 */
+            margin: 6px auto; /* 缩小间距 */
+            padding: 6px 12px; /* 缩小内边距 */
+            border-radius: 12px;
+            background-color: #f9f9f9;
+            box-shadow: rgba(149, 157, 165, 0.1) 0px 2px 6px;
+            transition: box-shadow 0.2s ease;
+            font-size: 14px; /* 缩小字体 */
+        }
+
+        /* hover 效果 */
+        .item:hover {
+            box-shadow: rgba(149, 157, 165, 0.4) 0px 8px 20px;
+        }
+
+        /* 按钮样式 */
+        .todo-button {
+            width: 120px;
+            height: 40px;
+            border-radius: 0 20px 20px 0;
+            line-height: 40px;
+            text-align: center;
+            background: linear-gradient(to right, rgb(108, 17, 225), rgb(133, 121, 182));
+            color: aliceblue;
+            cursor: pointer;
+            user-select: none;
+            font-weight: bold;
+            transition: background 0.3s ease;
+            border: 1px solid #dbd2d2; /* 和输入框对齐 */
+            border-left: none; /* 去掉左边线 */
+        }
+
+        /* hover 效果 */
+        .todo-button:hover {
+            background: linear-gradient(to right, rgb(85, 13, 172), rgb(104, 92, 148));
+        }
+
+        /* 输入框样式 */
+        .todo-input {
+            border: 1px solid #dbd2d2;
+            border-radius: 10px 0 0 10px;
+            border-left: none;
+            outline: none;
+            width: 250px;
+            height: 40px;
+            padding: 0 10px;
+            font-size: 16px;
+        }
+
+        /* 表单容器样式 */
+        .todo-form {
+            display: flex;
+            justify-content: center; /* 将输入框和按钮放在一行 */
+            margin-bottom: 20px;
+            width: 80%; /* 控制输入框和按钮的宽度 */
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(to right, rgb(108, 17, 225), rgb(133, 121, 182));
+        }
+
+        /* 应用的主要容器样式 */
+        .todo-app {
+            width: 600px;
+            max-height: 600px;
+            min-height: 700px;
+            background-color: aliceblue;
+            padding: 20px;
+            box-sizing: border-box;
+            margin-top: 10px;
+            border-radius: 20px;
+            overflow-y: auto;
+        }
+
+        /* 标题样式 */
+        .title {
+            font-size: 18px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .completed {
+        color: gray;
+        text-decoration: line-through;
+        opacity: 0.6;
+        }
+    </style>
+
+    <script>
+    const input = document.querySelector('.todo-input');
+    const addBtn = document.querySelector('.todo-button');
+    const app = document.querySelector('.todo-app');
+
+    // 添加新任务
+    addBtn.addEventListener('click', () => {
+      const text = input.value.trim();
+      if (text === '') return;
+
+      const newItem = document.createElement('div');
+      newItem.className = 'item';
+      newItem.innerHTML = `
+        <input type="checkbox" />
+        <span class="name">${text}</span>
+        <div class="del">del</div>
+      `;
+      app.appendChild(newItem);
+      input.value = '';
+
+      addToggleComplete(newItem);
+    });
+
+    // 初始任务绑定功能
+    document.querySelectorAll('.item').forEach(addToggleComplete);
+
+    // 完成 / 取消完成 切换函数
+    function addToggleComplete(item) {
+      const delBtn = item.querySelector('.del');
+      item.querySelector('input[type="checkbox"]').disabled = true; // 防止误点击
+
+      delBtn.addEventListener('click', () => {
+        item.classList.toggle('completed');
+      });
+    }
+    </script> 
+    
+
+
+</body>
+</html>
